@@ -9,11 +9,14 @@ export class HeroFactory {
     this.game = game;
   }
 
-  createHero() {
+  createHero(pos?: {x: number, y: number}) {
     const hero = new Hero(this.game);
     hero.sprite = Sprite.from('/assets/hero.png');
+    hero.sprite.width = 50;
+    hero.sprite.height = 50;
     hero.init({
-      position: { x: 0, y: 100 },
+      position: { x: pos?.x || 0, y: pos?.y || 100 },
+      speed: 0.5,
     });
 
     return hero;
