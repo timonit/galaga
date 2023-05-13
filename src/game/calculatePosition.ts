@@ -1,28 +1,62 @@
-import { Unit } from '../core/entity/unit';
+import { Body, Engine } from 'matter-js';
+import { Hero } from './hero';
 
-export function calculatePosition(unit: Unit) {
-  if (unit.pressUp) {
-    unit.setPosition(
-      unit.state.position.x,
-      unit.state.position.y - unit.state.speed
+const canMove = (unit: Hero, x: number, y: number) => {
+  Body.setPosition(unit.body, { x, y });
+  Engine.update(unit.phisicEngine);
+
+  if (unit.phisicEngine.pairs.list.length) {
+    const unitBody = unit.phisicEngine.detector.bodies.find(
+      (body) => body.id === unit.body.id
     );
+
+    Body.setPosition(unit.body, {
+      // @ts-ignore
+      x: unitBody.positionPrev.x,
+      // @ts-ignore
+      y: unitBody.positionPrev.y,
+    });
+
+    return false;
+  }
+  return true;
+};
+
+export function calculatePosition(unit: Hero) {
+  if (unit.pressUp) {
+    const y = unit.state.position.y - unit.state.speed;
+
+    if (canMove(unit, unit.state.position.x, y)) {
+      unit.setPosition(unit.state.position.x, y);
+      unit.sprite.position.x = unit.state.position.x;
+      unit.sprite.position.y = unit.state.position.y;
+    }
   }
   if (unit.pressDown) {
-    unit.setPosition(
-      unit.state.position.x,
-      unit.state.position.y + unit.state.speed
-    );
+    const y = unit.state.position.y + unit.state.speed;
+
+    if (canMove(unit, unit.state.position.x, y)) {
+      unit.setPosition(unit.state.position.x, y);
+      unit.sprite.position.x = unit.state.position.x;
+      unit.sprite.position.y = unit.state.position.y;
+    }
   }
   if (unit.pressRight) {
-    unit.setPosition(
-      unit.state.position.x + unit.state.speed,
-      unit.state.position.y
-    );
+    const x = unit.state.position.x + unit.state.speed;
+
+    if (canMove(unit, x, unit.state.position.y)) {
+      unit.setPosition(x, unit.state.position.y);
+      unit.sprite.position.x = unit.state.position.x;
+      unit.sprite.position.y = unit.state.position.y;
+    }
   }
   if (unit.pressLeft) {
-    unit.setPosition(
-      unit.state.position.x - unit.state.speed,
-      unit.state.position.y
-    );
+    const x = unit.state.position.x - unit.state.speed;
+
+    if (canMove(unit, x, unit.state.position.y)) {
+      unit.setPosition(x, unit.state.position.y);
+      unit.sprite.position.x = unit.state.position.x;
+      unit.sprite.position.y = unit.state.position.y;
+    }
   }
 }

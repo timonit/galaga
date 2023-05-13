@@ -18,8 +18,6 @@ export abstract class Unit<
 
   setPosition(x: number, y: number) {
     this.state.position = { x, y };
-    this.sprite.position.x = this.state.position.x;
-    this.sprite.position.y = this.state.position.y;
   }
 
   init(state: STATE): void {
