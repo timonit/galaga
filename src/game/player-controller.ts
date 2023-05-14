@@ -1,6 +1,6 @@
-import { Unit } from '../core/entity/unit';
+import { Hero } from './hero';
 
-export function playerController(unit: Unit) {
+export function playerController(unit: Hero) {
   document.addEventListener('keydown', (e) => {
     switch (e.code) {
       case 'KeyW': {

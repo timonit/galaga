@@ -11,6 +11,10 @@ export abstract class Entity<STATE extends EntityState = EntityState> {
   constructor(game: Game) {
     this.game = game;
   }
+
+  setPosition(x: number, y: number) {
+    this.state.position = { x, y };
+  }
   
   init(state: STATE) {
     this.state = state;

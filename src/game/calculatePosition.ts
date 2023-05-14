@@ -3,10 +3,10 @@ import { Hero } from './hero';
 
 const canMove = (unit: Hero, x: number, y: number) => {
   Body.setPosition(unit.body, { x, y });
-  Engine.update(unit.phisicEngine);
+  Engine.update(unit.game.phisicalEngine);
 
-  if (unit.phisicEngine.pairs.list.length) {
-    const unitBody = unit.phisicEngine.detector.bodies.find(
+  if (unit.game.phisicalEngine.pairs.list.length) {
+    const unitBody = unit.game.phisicalEngine.detector.bodies.find(
       (body) => body.id === unit.body.id
     );
 
