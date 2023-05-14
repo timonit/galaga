@@ -21,9 +21,9 @@ export class Hero extends Unit {
       position: { x: this.state.position.x, y: this.state.position.y },
       vertices: [
         { x: 0, y: 0 },
-        { x: 0 + 45, y: 0 },
-        { x: 0 + 45, y: 0 + 45 },
-        { x: 0, y: 0 + 45 },
+        { x: 0 + 50, y: 0 },
+        { x: 0 + 50, y: 0 + 50 },
+        { x: 0, y: 0 + 50 },
       ],
     });
   }

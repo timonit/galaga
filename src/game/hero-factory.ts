@@ -2,7 +2,6 @@ import { Sprite } from 'pixi.js';
 import { Game } from '../core/game';
 import { Hero } from './hero';
 import { Engine } from 'matter-js';
-
 export class HeroFactory {
   game: Game;
 
@@ -13,9 +12,9 @@ export class HeroFactory {
     this.phisicEngine = engine;
   }
 
-  createHero(pos?: {x: number, y: number}) {
+  createHero(sprite: Sprite, pos?: { x: number; y: number }) {
     const hero = new Hero(this.game, this.phisicEngine);
-    hero.sprite = Sprite.from('/assets/hero.png');
+    hero.sprite = sprite;
     hero.sprite.width = 50;
     hero.sprite.height = 50;
     hero.init({
