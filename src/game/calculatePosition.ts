@@ -1,7 +1,8 @@
 import { Body, Engine } from 'matter-js';
 import { Hero } from './hero';
+import { Unit } from '../core/entity/unit';
 
-const canMove = (unit: Hero, x: number, y: number) => {
+export const canMove = (unit: Unit, x: number, y: number) => {
   Body.setPosition(unit.body, { x, y });
   Engine.update(unit.game.phisicalEngine);
 

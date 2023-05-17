@@ -9,17 +9,13 @@ export class HeroFactory {
     this.game = game;
   }
 
-  createHero(sprite: Sprite, pos?: { x: number; y: number }) {
-    const width = 50;
-    const height = 50;
+  createHero(sprite: Sprite, { x = 0, y = 100 }: { x: number; y: number }) {
     const hero = new Hero(this.game);
     hero.sprite = sprite;
-    hero.sprite.width = width;
-    hero.sprite.height = height;
     hero.init({
-      width,
-      height,
-      position: { x: pos?.x || 0, y: pos?.y || 100 },
+      width: 50,
+      height: 50,
+      position: { x, y },
       speed: 0.5,
     });
 

@@ -9,11 +9,11 @@ const game = new Game();
 game.init();
 
 const factory = new HeroFactory(game);
-const hero = factory.createHero(Sprite.from('/assets/batman.png'));
-const hero2 = factory.createHero(Sprite.from('/assets/box.png'), {
-  x: 200,
-  y: 200,
-});
+const heroSprite = Sprite.from('/assets/batman.png');
+const boxSprite = Sprite.from('/assets/box.png');
+const hero = factory.createHero(heroSprite, { x: 250, y: 250 });
+const hero2 = factory.createHero(boxSprite, { x: 200, y: 200 });
+hero2.body.isStatic = true;
 game.stage.addChild(hero.sprite);
 game.stage.addChild(hero2.sprite);
 
@@ -24,6 +24,6 @@ Composite.add(game.phisicalEngine.world, [hero.body, hero2.body]);
 
 Events.on(game.phisicalEngine, 'afterUpdate', (event) => {
   if (game.phisicalEngine.pairs.list.length) {
-    console.log('pairs', hero, game.phisicalEngine);
+    console.log('pairs', hero2.body.position.y, game.phisicalEngine.pairs);
   }
 });

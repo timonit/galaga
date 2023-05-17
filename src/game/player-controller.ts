@@ -23,6 +23,10 @@ export function playerController(unit: Hero) {
         unit.state.speed += 0.5;
         break;
       }
+      case 'KeyE': {
+        unit.shot();
+        break;
+      }
       default: {
         console.log(e.code, unit.state.speed);
       }
