@@ -25,5 +25,8 @@ Composite.add(game.phisicalEngine.world, [hero.body, hero2.body]);
 Events.on(game.phisicalEngine, 'afterUpdate', (event) => {
   if (game.phisicalEngine.pairs.list.length) {
     console.log('pairs', hero2.body.position.y, game.phisicalEngine.pairs);
+    hero2.setPosition(hero2.body.position.x, hero2.body.position.y);
+    hero2.sprite.position.x = hero2.body.position.x;
+    hero2.sprite.position.y = hero2.body.position.y;
   }
 });
