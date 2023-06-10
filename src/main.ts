@@ -14,13 +14,13 @@ const boxSprite = Sprite.from('/assets/box.png');
 const hero = factory.createHero(heroSprite, { x: 250, y: 250 });
 const hero2 = factory.createHero(boxSprite, { x: 200, y: 200 });
 hero2.body.isStatic = true;
-game.stage.addChild(hero.sprite);
-game.stage.addChild(hero2.sprite);
+// game.stage.addChild(hero.sprite);
+// game.stage.addChild(hero2.sprite);
 
 playerController(hero);
 game.app.ticker.add(() => calculatePosition(hero), hero);
 
-Composite.add(game.phisicalEngine.world, [hero.body, hero2.body]);
+// Composite.add(game.phisicalEngine.world, [hero.body, hero2.body]);
 
 Events.on(game.phisicalEngine, 'afterUpdate', (event) => {
   if (game.phisicalEngine.pairs.list.length) {

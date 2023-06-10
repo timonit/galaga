@@ -1,10 +1,9 @@
-import { Graphics, Sprite } from 'pixi.js';
 import { Entity } from '../core/entity/entity';
 import { EntityState } from '../core/entity/entity-state';
-import { UnitState } from '../core/entity/unit-state';
-import { canMove } from './calculatePosition';
-import { Bodies, Body, Composite } from 'matter-js';
-import { Unit } from '../core/entity/unit';
+import { MovableState } from '../core/entity/movable-state';
+import { canMove } from '../core/utils/can-move';
+import { Body, Composite } from 'matter-js';
+import { Movable } from '../core/entity/movable';
 import { Hero } from './hero';
 
 interface ProjectileState extends EntityState {
@@ -14,18 +13,20 @@ interface ProjectileState extends EntityState {
 }
 
 export class Projectile extends Entity<ProjectileState> {
-  entityName = 'projectile';
-
-  sprite: Graphics | Sprite;
+  entityType = 'projectile';
 
   body: Body;
 
   owner: Hero;
 
+  canMove(x: number, y: number) {
+    return canMove(this as unknown as Movable, this.state.position.x, y);
+  }
+
   move() {
     const y = this.state.position.y - this.state.speed;
 
-    if (canMove(this as unknown as Unit, this.state.position.x, y)) {
+    if (this.canMove(this.state.position.x, y)) {
       this.setPosition(this.state.position.x, y);
       this.sprite.position.y = this.state.position.y;
     } else this.finish();
@@ -41,26 +42,8 @@ export class Projectile extends Entity<ProjectileState> {
     Composite.remove(this.game.phisicalEngine.world, this.body);
   }
 
-  bodyPivote: {x: number, y: number} ;
-
-  init(state: UnitState): void {
+  init(state: MovableState): void {
     super.init(state);
-    const {
-      position: { x, y },
-      width,
-      height,
-    } = this.state;
-
-    const sprite = Sprite.from('/assets/box.png');
-    sprite.position.set(x, y);
-    sprite.width = width;
-    sprite.height = height;
-    sprite.anchor.set(0.5);
-    this.sprite = sprite;
-
-    this.body = Bodies.rectangle(x, y, width, height);
-    this.game.app.stage.addChild(this.sprite);
-    Composite.add(this.game.phisicalEngine.world, [this.body]);
     this.start();
   }
 }

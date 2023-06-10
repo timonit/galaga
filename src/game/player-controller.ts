@@ -4,27 +4,27 @@ export function playerController(unit: Hero) {
   document.addEventListener('keydown', (e) => {
     switch (e.code) {
       case 'KeyW': {
-        unit.pressUp = true;
+        unit.moveUp = unit.state.speed;
         break;
       }
       case 'KeyS': {
-        unit.pressDown = true;
+        unit.moveDown = unit.state.speed;
         break;
       }
       case 'KeyA': {
-        unit.pressLeft = true;
+        unit.moveLeft = unit.state.speed;
         break;
       }
       case 'KeyD': {
-        unit.pressRight = true;
+        unit.moveRight = unit.state.speed;
         break;
       }
       case 'Space': {
-        unit.state.speed += 0.5;
+        unit.shot();
         break;
       }
       case 'KeyE': {
-        unit.shot();
+        unit.state.speed += 0.5;
         break;
       }
       default: {
@@ -36,19 +36,19 @@ export function playerController(unit: Hero) {
   document.addEventListener('keyup', (e) => {
     switch (e.code) {
       case 'KeyS': {
-        unit.pressDown = false;
+        unit.moveDown = 0;
         break;
       }
       case 'KeyW': {
-        unit.pressUp = false;
+        unit.moveUp = 0;
         break;
       }
       case 'KeyD': {
-        unit.pressRight = false;
+        unit.moveRight = 0;
         break;
       }
       case 'KeyA': {
-        unit.pressLeft = false;
+        unit.moveLeft = 0;
         break;
       }
     }

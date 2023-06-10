@@ -1,60 +1,37 @@
-import { Body, Engine } from 'matter-js';
 import { Hero } from './hero';
-import { Unit } from '../core/entity/unit';
-
-export const canMove = (unit: Unit, x: number, y: number) => {
-  Body.setPosition(unit.body, { x, y });
-  Engine.update(unit.game.phisicalEngine);
-
-  if (unit.game.phisicalEngine.pairs.list.length) {
-    const unitBody = unit.game.phisicalEngine.detector.bodies.find(
-      (body) => body.id === unit.body.id
-    );
-
-    Body.setPosition(unit.body, {
-      // @ts-ignore
-      x: unitBody.positionPrev.x,
-      // @ts-ignore
-      y: unitBody.positionPrev.y,
-    });
-
-    return false;
-  }
-  return true;
-};
 
 export function calculatePosition(unit: Hero) {
-  if (unit.pressUp) {
-    const y = unit.state.position.y - unit.state.speed;
+  if (unit.moveUp) {
+    const y = unit.state.position.y - unit.moveUp;
 
-    if (canMove(unit, unit.state.position.x, y)) {
+    if (unit.canMove(unit.state.position.x, y)) {
       unit.setPosition(unit.state.position.x, y);
       unit.sprite.position.x = unit.state.position.x;
       unit.sprite.position.y = unit.state.position.y;
     }
   }
-  if (unit.pressDown) {
-    const y = unit.state.position.y + unit.state.speed;
+  if (unit.moveDown) {
+    const y = unit.state.position.y + unit.moveDown;
 
-    if (canMove(unit, unit.state.position.x, y)) {
+    if (unit.canMove(unit.state.position.x, y)) {
       unit.setPosition(unit.state.position.x, y);
       unit.sprite.position.x = unit.state.position.x;
       unit.sprite.position.y = unit.state.position.y;
     }
   }
-  if (unit.pressRight) {
-    const x = unit.state.position.x + unit.state.speed;
+  if (unit.moveRight) {
+    const x = unit.state.position.x + unit.moveRight;
 
-    if (canMove(unit, x, unit.state.position.y)) {
+    if (unit.canMove(x, unit.state.position.y)) {
       unit.setPosition(x, unit.state.position.y);
       unit.sprite.position.x = unit.state.position.x;
       unit.sprite.position.y = unit.state.position.y;
     }
   }
-  if (unit.pressLeft) {
-    const x = unit.state.position.x - unit.state.speed;
+  if (unit.moveLeft) {
+    const x = unit.state.position.x - unit.moveLeft;
 
-    if (canMove(unit, x, unit.state.position.y)) {
+    if (unit.canMove(x, unit.state.position.y)) {
       unit.setPosition(x, unit.state.position.y);
       unit.sprite.position.x = unit.state.position.x;
       unit.sprite.position.y = unit.state.position.y;
